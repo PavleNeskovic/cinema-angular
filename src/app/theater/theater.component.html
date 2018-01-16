@@ -1,0 +1,27 @@
+<div class="container">
+    <h1>Enter a new Theater</h1>
+    <form (ngSubmit)="onSubmit() "#theaterForm="ngForm">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" required  [(ngModel)]="model.name" name="name" #name="ngModel">
+      </div>
+      <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+  		{{errorRequired}}
+	  </div>
+
+      <button type="submit" class="btn btn-success" [disabled]="!theaterForm.form.valid">Submit</button>
+
+    </form>
+
+    <ul class="theater">
+	  <li *ngFor="let theater of theaters">
+	  	x {{theater.name}}
+
+<!-- 	    <a routerLink="/detail/{{movie.title}}">
+	      <span class="badge">{{movie.title}}</span> {{movie.title}}
+	    </a> -->
+	    <!-- <button class="delete" title="delete hero"
+	    (click)="delete(hero)">x</button> -->
+	  </li>
+	</ul>
+</div>
