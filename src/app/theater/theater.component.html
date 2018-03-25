@@ -1,4 +1,7 @@
 <div class="container">
+   <button (click)="toggleAdmin()">Admin</button>
+    
+    <div class="admin" *ngIf="admin">
     <h1>Enter a new Theater</h1>
     <form (ngSubmit)="onSubmit() "#theaterForm="ngForm">
       <div class="form-group">
@@ -12,16 +15,25 @@
       <button type="submit" class="btn btn-success" [disabled]="!theaterForm.form.valid">Submit</button>
 
     </form>
+  </div>
 
-    <ul class="theater">
+  <div class="list-group list-group-flush" *ngFor="let theater of theaters">
+      <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+        <div class="list-group-item-heading">
+          <h1>{{theater.name}}</h1>
+        </div>
+      </a>
+    </div>
+
+   <!--  <ul class="theater">
 	  <li *ngFor="let theater of theaters">
 	  	x {{theater.name}}
 
-<!-- 	    <a routerLink="/detail/{{movie.title}}">
+	    <a routerLink="/detail/{{movie.title}}">
 	      <span class="badge">{{movie.title}}</span> {{movie.title}}
-	    </a> -->
-	    <!-- <button class="delete" title="delete hero"
-	    (click)="delete(hero)">x</button> -->
-	  </li>
-	</ul>
+	    </a>
+ <button class="delete" title="delete hero"
+	    (click)="delete(hero)">x</button> 
+</li>
+	</ul> -->
 </div>

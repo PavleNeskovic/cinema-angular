@@ -1,7 +1,28 @@
-<p>seats :)</p>
+    <div *ngIf="afAuth.authState | async as user; else showLogin">
+      <div class="content align-center">
+        <div class="card">
+          <div class="firstinfo"><img [src]="user.photoURL"/>
+            <div class="profileinfo">
+              <h2>{{user.displayName}}</h2>
+              <h3>{{user.email}}</h3>
+              <p class="bio">"May the Force be with you." Star Wars, 1977</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h3>Welcome {{ user.displayName }}, please choose your seats.</h3>
+      <button class="btn btn-secondary" (click)="logout()">Logout</button>
+      <button (click)="createEmptySeats()">Create Empty seats</button>
+    </div>
+    <ng-template #showLogin>
+      <h5 class="align-center">To continue with your reservation, please login.</h5>
+      <img class="facebook-login align-center" (click)="login()" src="/assets/facebook-sign-in-button.png"/>
+    </ng-template>
 
-<ul>
-  <li class="text" *ngFor="let item of items | async">
-    {{item.key}}
-  </li>
-</ul>
+  <div class="seats-container" *ngIf="afAuth.authState | async as user;">
+    <div *ngFor="let item of items | async">
+      <div id="{{item.payload.doc.id}}" *ngIf="isEmpty(item)"  class="seat" (click)="selectSeat(item, $event)"></div>
+      <div id="{{item.payload.doc.id}}" *ngIf="isSelected(item)" class="seat selected" (click)="selectSeat(item, $event)"></div> 
+      <div id="{{item.payload.doc.id}}" *ngIf="isTaken(item)" class="seat notvacant" (click)="selectSeat(item, $event)"></div> 
+    </div>
+  </div>

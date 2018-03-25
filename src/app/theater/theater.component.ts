@@ -17,6 +17,7 @@ export class TheaterComponent implements OnInit {
 	theaters: Theater[];
 	model = new Theater("Push is not working");
 	errorRequired = "This field is required";
+	admin = false;
 
   constructor(private theaterService: TheaterService) { }
 
@@ -33,6 +34,10 @@ export class TheaterComponent implements OnInit {
 	this.theaterService.addTheater(this.model).subscribe(theater => {
 	    this.theaters.push(theater);
 	  })
+  }
+
+  toggleAdmin() {
+    this.admin = !this.admin;
   }
 
 }

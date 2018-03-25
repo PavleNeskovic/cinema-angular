@@ -22,6 +22,7 @@ export class MovieComponent implements OnInit {
   model = new Movie("Inconst", "What is Inconst?");
   submitted = false;
   errorRequired = "This field is required";
+  admin = false;
 
   constructor(private movieService: MovieService) {}
  
@@ -38,7 +39,12 @@ export class MovieComponent implements OnInit {
   getMovies (): void {
   this.movieService.getMovies()
     .subscribe(movies => this.movies = movies);
-}
+  }
+
+  toggleAdmin() {
+    this.admin = !this.admin;
+  }
+
 
   // TODO: Remove this when we're done
   get diagnostic() { return JSON.stringify(this.model); }
