@@ -15,7 +15,7 @@ import { TheaterService } from './theater.service';
 export class TheaterComponent implements OnInit {
 
 	theaters: Theater[];
-	model = new Theater("Push is not working");
+	model = new Theater("Name");
 	errorRequired = "This field is required";
 	admin = false;
 

@@ -34,11 +34,11 @@
 }
 
 .seat.notvacant {
-  background: #ccc;
-  background: linear-gradient(#ccc 0%, #ccc 70%, #000 70%, #ccc 77%);
+  background: #cc3300;
+  background: linear-gradient(#cc3300 0%, #cc3300 70%, #000 70%, #cc3300 77%);
 }
 .seat.notvacant:before, .seat.notvacant:after {
-  background: #ccc;
+  background: #cc3300;
 }
 
 .seat:after, .seat:before {

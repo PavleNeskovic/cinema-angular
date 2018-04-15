@@ -46,15 +46,14 @@ empty = "empty";
 if uid is set - set to empty, 
 otherwise someone else reserved the seat */
   selectSeat(item, event) {
-    debugger;
     var reserved;
     var key = this.extractKey(item);
     var data = this.extractData(item);
     this.item = this.db.doc<Item>('items/' + key);
-    if (data.reserved === this.empty) {
+    if (this.isEmpty(item)) {
       reserved = this.afAuth.auth.currentUser.uid;
       this.renderer.setElementClass(event.target,"selected",true);
-    } else if (data.reserved === this.afAuth.auth.currentUser.uid) {
+    } else if (this.isSelected(item)) {
       reserved = this.empty;
     }
     this.item.update({ number: data.number, reserved: reserved })

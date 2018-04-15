@@ -2,7 +2,7 @@
   <button (click)="toggleAdmin()">Admin</button>
     
     <div class="admin" *ngIf="admin">
-      <h1>Enter a new Movie</h1>
+      <h2>Enter a new Movie</h2>
       <form (ngSubmit)="onSubmit() "#movieForm="ngForm">
         <div class="form-group">
           <label for="name">Title</label>
@@ -20,9 +20,8 @@
     		{{errorRequired}}
   	  </div>
 
-
         <button type="submit" class="btn btn-success" [disabled]="!movieForm.form.valid">Submit</button>
-
+        
       </form>
     </div>
 

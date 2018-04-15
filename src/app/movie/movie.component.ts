@@ -19,7 +19,7 @@ export class MovieComponent implements OnInit {
   "decription": "Opis teda",
   "imageUrl": "httpurl"
   };
-  model = new Movie("Inconst", "What is Inconst?");
+  model = new Movie("Name", "Description");
   submitted = false;
   errorRequired = "This field is required";
   admin = false;
