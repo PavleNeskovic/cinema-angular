@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+      <h3>Movies</h3>
+      <div aria-labelledby="dropdownBasic1" *ngFor="let movie of movies">
+        <button (click)="selectMovie(movie.title)" class="dropdown-item">{{movie.title}}</button>
+      </div>
+    </div>
+    <div class="col-sm">
+      <h3>Theater</h3>
+      <div aria-labelledby="dropdownBasic1" *ngFor="let theater of theaters">
+        <button (click)="selectTheater(theater.name)" class="dropdown-item">{{theater.name}}</button>
+      </div>
+    </div>
+    <div class="col-sm">
+      <h3>New Projection</h3>
+      <form (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="cmovie">Movie:</label>
+          <input disabled class="form-control" name="cmovie" style="background-color: white" value="{{projection.movieTitle}}" />
+        </div>
+        <label for="theater">Theater:</label>
+        <input disabled class="form-control" name="theater" style="background-color: white" value="{{projection.theatreName}}" />
+        <div class="form-group">
+          <label for="time">Time:</label>
+          <input class="form-control" name="time" [(ngModel)]="projection.time" style="background-color: white"/>
+        </div>
+        <div class="form-group">
+            <label for="dp">Date:</label>
+          <div class="input-group">
+            <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="date" ngbDatepicker #d="ngbDatepicker">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button">Open Calendar</button>
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-success">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>

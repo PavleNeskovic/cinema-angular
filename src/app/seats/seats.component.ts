@@ -59,6 +59,25 @@ otherwise someone else reserved the seat */
     this.item.update({ number: data.number, reserved: reserved })
   }
 
+  // updateDataWithTransaction(){
+  //   return this.db.runTransaction(function(transaction) {
+  //     // This code may get re-run multiple times if there are conflicts.
+  //     return transaction.get(sfDocRef).then(function(sfDoc) {
+  //         if (!sfDoc.exists) {
+  //             throw "Document does not exist!";
+  //         }
+  
+  //         var newPopulation = sfDoc.data().population + 1;
+  //         transaction.update(sfDocRef, { population: newPopulation });
+  //     });
+  // }).then(function() {
+  //     console.log("Transaction successfully committed!");
+  // }).catch(function(error) {
+  //     console.log("Transaction failed: ", error);
+  // });
+  
+  // }
+
   extractKey(item){
     return item.payload.doc.id;
   }

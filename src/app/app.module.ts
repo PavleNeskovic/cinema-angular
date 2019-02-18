@@ -5,6 +5,7 @@ import { FormsModule }   from '@angular/forms';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { environment } from '../environments/environment';
 
 import { AppComponent } from './app.component';
@@ -18,6 +19,8 @@ import { ProjectionComponent } from './projection/projection.component';
 import { ProjectionService } from './projection/projection.service';
 import { MovieDetailsComponent } from './movie-details/movie-details.component';
 import { SeatsComponent } from './seats/seats.component';
+import { ProjectionSetupComponent } from './projection-setup/projection-setup.component';
+import { ProjectionSetupService } from './projection-setup/projection-setup.service';
 
 
 
@@ -28,12 +31,14 @@ import { SeatsComponent } from './seats/seats.component';
     TheaterComponent,
     ProjectionComponent,
     MovieDetailsComponent,
-    SeatsComponent
+    SeatsComponent,
+    ProjectionSetupComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
+    NgbModule.forRoot(),
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase, 'cinema2-2d714'), // imports firebase/app needed for everything
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
@@ -43,7 +48,8 @@ import { SeatsComponent } from './seats/seats.component';
     AppService,
     MovieService,
     TheaterService,
-    ProjectionService
+    ProjectionService,
+    ProjectionSetupService
    ],
   bootstrap: [AppComponent]
 })

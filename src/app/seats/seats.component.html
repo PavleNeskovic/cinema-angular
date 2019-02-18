@@ -12,8 +12,8 @@
       </div>
       <h3>Welcome {{ user.displayName }}, please choose your seats.</h3>
       <button class="btn btn-secondary" (click)="logout()">Logout</button>
-      <button (click)="createEmptySeats()">Create Empty seats</button>
     </div>
+
     <ng-template #showLogin>
       <h5 class="align-center">To continue with your reservation, please login.</h5>
       <img class="facebook-login align-center" (click)="login()" src="/assets/facebook-sign-in-button.png"/>
