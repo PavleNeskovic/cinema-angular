@@ -15,17 +15,17 @@ export interface Item { number: number, reserved: string }
 })
 export class SeatsComponent implements OnInit {
 
-itemsCollection: AngularFirestoreCollection<Item>;
-private item: AngularFirestoreDocument<Item>;
-items: Observable<any[]>;
-myDynamicColor = "red";
-empty = "empty";
+  itemsCollection: AngularFirestoreCollection<Item>;
+  private item: AngularFirestoreDocument<Item>;
+  items: Observable<any[]>;
+  myDynamicColor = "red";
+  empty = "empty";
 
   constructor(private readonly db: AngularFirestore,
-  	public afAuth: AngularFireAuth,
-  	private route: ActivatedRoute,
+    public afAuth: AngularFireAuth,
+    private route: ActivatedRoute,
     private renderer: Renderer,
-  	private location: Location) {
+    private location: Location) {
     this.itemsCollection = db.collection<Item>('items');
     this.items = db.collection('items', ref => ref.orderBy('number')).snapshotChanges();
   }
@@ -42,60 +42,55 @@ empty = "empty";
     this.itemsCollection.add({ number: number, reserved: reserved });
   }
 
-/* If it's empty - set uid, 
-if uid is set - set to empty, 
-otherwise someone else reserved the seat */
   selectSeat(item, event) {
     var reserved;
     var key = this.extractKey(item);
     var data = this.extractData(item);
     this.item = this.db.doc<Item>('items/' + key);
-    if (this.isEmpty(item)) {
-      reserved = this.afAuth.auth.currentUser.uid;
-      this.renderer.setElementClass(event.target,"selected",true);
-    } else if (this.isSelected(item)) {
-      reserved = this.empty;
-    }
-    this.item.update({ number: data.number, reserved: reserved })
+    var sfDocRef = this.db.firestore.collection('items').doc(key);
+    var that = this;
+    return this.db.firestore.runTransaction(function (transaction) {
+      // This code may get re-run multiple times if there are conflicts.
+      return transaction.get(sfDocRef).then(function (s) {
+        /*If it's empty - set uid, 
+          if uid is set - set to empty, 
+          otherwise someone else reserved the seat */
+        if (s.data().reserved == "empty") {
+          reserved = that.afAuth.auth.currentUser.uid;
+          that.renderer.setElementClass(event.target, "selected", true);
+          transaction.update(sfDocRef, { number: data.number, reserved: reserved });
+        } else if (s.data().reserved == that.afAuth.auth.currentUser.uid) {
+          reserved = "empty";
+          transaction.update(sfDocRef, { number: data.number, reserved: reserved });
+        } else {
+          transaction.update(sfDocRef, { number: data.number, reserved: s.data().reserved });
+        }
+      });
+    }).then(function () {
+      console.log("Transaction successfully committed!");
+    }).catch(function (error) {
+      console.log("Transaction failed: ", error);
+    });
   }
 
-  // updateDataWithTransaction(){
-  //   return this.db.runTransaction(function(transaction) {
-  //     // This code may get re-run multiple times if there are conflicts.
-  //     return transaction.get(sfDocRef).then(function(sfDoc) {
-  //         if (!sfDoc.exists) {
-  //             throw "Document does not exist!";
-  //         }
-  
-  //         var newPopulation = sfDoc.data().population + 1;
-  //         transaction.update(sfDocRef, { population: newPopulation });
-  //     });
-  // }).then(function() {
-  //     console.log("Transaction successfully committed!");
-  // }).catch(function(error) {
-  //     console.log("Transaction failed: ", error);
-  // });
-  
-  // }
-
-  extractKey(item){
+  extractKey(item) {
     return item.payload.doc.id;
   }
-  extractData(item){
+  extractData(item) {
     return item.payload.doc.data();
   }
 
-  isEmpty(item){
+  isEmpty(item) {
     var data = this.extractData(item);
     return data.reserved === this.empty;
   }
 
-  isTaken(item){
+  isTaken(item) {
     var data = this.extractData(item);
     return data.reserved !== this.afAuth.auth.currentUser.uid && data.reserved !== this.empty;
   }
 
-  isSelected(item){
+  isSelected(item) {
     var data = this.extractData(item);
     return data.reserved === this.afAuth.auth.currentUser.uid;
   }

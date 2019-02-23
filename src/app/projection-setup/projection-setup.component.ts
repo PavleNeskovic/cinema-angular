@@ -6,7 +6,6 @@ import { MovieService } from '../movie/movie.service';
 import { ProjectionSetupService } from './projection-setup.service';
 import { ProjectionSetup } from './projection-setup';
 
-import {NgbDateStruct, NgbCalendar} from '@ng-bootstrap/ng-bootstrap';
 import { NgbCalendarGregorian } from '@ng-bootstrap/ng-bootstrap/datepicker/ngb-calendar';
 
 @Component({
@@ -21,7 +20,7 @@ export class ProjectionSetupComponent implements OnInit {
   projections;
   time;
   date;
-  projection: ProjectionSetup = new ProjectionSetup("", "", "");
+  projection: ProjectionSetup = new ProjectionSetup("", "", "2018-03-25T20:00");
   constructor(private projectionService: ProjectionSetupService, 
               private movieService: MovieService, 
               private theaterService: TheaterService,
@@ -43,9 +42,10 @@ export class ProjectionSetupComponent implements OnInit {
   }
 
   onSubmit() {
-    this.projection.time += " " + this.date.day + "-" + this.date.month + "-" + this.date.year;
-    this.projectionService.addProjection(this.projection).subscribe(projection => {
-	    this.projections.push(projection);
+    // this.projection.time += " " + this.date.day + "-" + this.date.month + "-" + this.date.year;
+    this.projectionService.addProjection(this.projection)
+    .subscribe(projection => {
+	    // this.projections.push(projection);
 	  })
   }
 
