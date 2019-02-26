@@ -11,20 +11,32 @@
     </div>
   </div>
   <h3>Welcome {{ user.displayName }}, please choose your seats.</h3>
-  <button class="btn btn-secondary" (click)="logout()">Logout</button>
+  <button class="btn btn-secondary" (click)="logout()">
+    <i class="fas fa-sign-out-alt"></i> Logout</button>
+  <button class="btn btn-outline-success" style="float:right" (click)="onSuccess()">
+    <i class="fas fa-ticket-alt"></i> Reserve </button>
 </div>
 
 <ng-template #showLogin>
   <h5 class="align-center">To continue with your reservation, please login.</h5>
+  <div *ngIf="success">
+    <div class="success-msg">
+      <i class="fa fa-check"></i>
+      You have successfully reserved your seats!
+    </div>
+  </div>
   <img class="facebook-login align-center" (click)="login()" src="/assets/facebook-sign-in-button.png" />
 </ng-template>
 
-<div *ngIf="afAuth.authState | async as user;">
-  <div *ngFor="let item of items | async">
-    <div id="{{item.payload.doc.id}}" *ngIf="isEmpty(item)" class="seat" (click)="selectSeat(item, $event)"></div>
-    <div id="{{item.payload.doc.id}}" *ngIf="isSelected(item)" class="seat selected" (click)="selectSeat(item, $event)">
-    </div>
-    <div id="{{item.payload.doc.id}}" *ngIf="isTaken(item)" class="seat notvacant" (click)="selectSeat(item, $event)">
+<div id="frame">
+  <div *ngIf="afAuth.authState | async as user;">
+    <div *ngFor="let item of items | async">
+      <div id="{{item.payload.doc.id}}" *ngIf="isEmpty(item)" class="seat" (click)="selectSeat(item, $event)"></div>
+      <div id="{{item.payload.doc.id}}" *ngIf="isSelected(item)" class="seat selected"
+        (click)="selectSeat(item, $event)">
+      </div>
+      <div id="{{item.payload.doc.id}}" *ngIf="isTaken(item)" class="seat notvacant" (click)="selectSeat(item, $event)">
+      </div>
     </div>
   </div>
 </div>

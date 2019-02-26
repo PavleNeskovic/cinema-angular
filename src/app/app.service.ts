@@ -46,10 +46,8 @@ export class AppService {
     };
   }
  
-  /** Log a HeroService message with the MessageService */
   public log(message: string) {
   	console.log(message);
-    // this.messageService.add('HeroService: ' + message);
   }
 
 }

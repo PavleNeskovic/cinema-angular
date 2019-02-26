@@ -20,6 +20,7 @@ export class SeatsComponent implements OnInit {
   items: Observable<any[]>;
   myDynamicColor = "red";
   empty = "empty";
+  success = false;
 
   constructor(private readonly db: AngularFirestore,
     public afAuth: AngularFireAuth,
@@ -104,6 +105,15 @@ export class SeatsComponent implements OnInit {
   }
   logout() {
     this.afAuth.auth.signOut();
+  }
+
+  onSuccess() {
+    this.logout();
+    this.success = true;
+      var timer = Observable.timer(6000);
+      timer.subscribe(t =>{
+        this.success = false;
+      });
   }
 
 }

@@ -7,6 +7,7 @@ import { ProjectionSetupService } from './projection-setup.service';
 import { ProjectionSetup } from './projection-setup';
 
 import { NgbCalendarGregorian } from '@ng-bootstrap/ng-bootstrap/datepicker/ngb-calendar';
+import { Observable } from 'rxjs/Rx';
 
 @Component({
   selector: 'app-projection-setup',
@@ -20,6 +21,7 @@ export class ProjectionSetupComponent implements OnInit {
   projections;
   time;
   date;
+  success = false;
   projection: ProjectionSetup = new ProjectionSetup("", "", "2018-03-25T20:00");
   constructor(private projectionService: ProjectionSetupService, 
               private movieService: MovieService, 
@@ -42,10 +44,14 @@ export class ProjectionSetupComponent implements OnInit {
   }
 
   onSubmit() {
-    // this.projection.time += " " + this.date.day + "-" + this.date.month + "-" + this.date.year;
     this.projectionService.addProjection(this.projection)
     .subscribe(projection => {
-	    // this.projections.push(projection);
+      this.success = true;
+      var timer = Observable.timer(6000);
+      timer.subscribe(t =>{
+        this.success = false;
+      });
+	    this.projection = new ProjectionSetup("", "", "2018-03-25T20:00");
 	  })
   }
 

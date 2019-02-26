@@ -1,15 +1,27 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('https://bootswatch.com/4/lux/bootstrap.min.css'); 
+@import url('https://use.fontawesome.com/releases/v5.7.2/css/all.css');
 body,h1,h5 {
 	font-family: "Raleway", sans-serif;
 }
+
 h1 {
 	color: white;
 }
+
 body, html {height: 100%}
+
 .bgimg {
     background-image: url('/assets/Cinema_Background.jpg');
     min-height: 100%;
     background-position: center;
     background-size: cover;
+}
+
+.success-msg {
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 3px 3px 3px 3px;
+  color: #270;
+  background-color: #DFF2BF;
 }

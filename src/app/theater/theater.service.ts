@@ -19,7 +19,7 @@ export class TheaterService {
   	getTheaters (): Observable<Theater[]> {
     return this.http.get<Theater[]>(this.appService.baseUrl + '/theatre/all')
       .pipe(
-        tap(heroes => this.appService.log(`fetched theaters`)),
+        tap(theaters => this.appService.log(`fetched theaters`)),
         catchError(this.appService.handleError('getTheaters', []))
       );
   	}

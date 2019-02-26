@@ -44,8 +44,4 @@ export class MovieComponent implements OnInit {
   toggleAdmin() {
     this.admin = !this.admin;
   }
-
-
-  // TODO: Remove this when we're done
-  get diagnostic() { return JSON.stringify(this.model); }
 }

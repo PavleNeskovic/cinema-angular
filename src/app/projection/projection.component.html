@@ -1,3 +1,5 @@
-<div class="btn-group" style="display:block; margin:0 auto;" role="group" aria-label="Basic example" *ngFor="let projection of projections">
-  <button type="button" class="btn btn-secondary" routerLink="/seats">At {{projection.time | date:"medium"}} <i class="glyphicons glyphicons-clock"></i> </button>
+<div class="btn-group" style="display:block; margin:0 auto;" role="group" aria-label="Basic example"
+  *ngFor="let projection of projections">
+  <button type="button" class="btn btn-secondary" routerLink="/seats"><i class="fa fa-calendar-day"></i>
+    {{projection.time | date:"medium"}} <i class="glyphicons glyphicons-clock"></i> </button>
 </div>

@@ -1,11 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {HttpClientModule} from '@angular/common/http';
-import { FormsModule }   from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireAuthModule } from 'angularfire2/auth';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from '../environments/environment';
 
 import { AppComponent } from './app.component';
@@ -17,7 +17,6 @@ import { TheaterComponent } from './theater/theater.component';
 import { TheaterService } from './theater/theater.service';
 import { ProjectionComponent } from './projection/projection.component';
 import { ProjectionService } from './projection/projection.service';
-import { MovieDetailsComponent } from './movie-details/movie-details.component';
 import { SeatsComponent } from './seats/seats.component';
 import { ProjectionSetupComponent } from './projection-setup/projection-setup.component';
 import { ProjectionSetupService } from './projection-setup/projection-setup.service';
@@ -30,7 +29,6 @@ import { ProjectionSetupService } from './projection-setup/projection-setup.serv
     MovieComponent,
     TheaterComponent,
     ProjectionComponent,
-    MovieDetailsComponent,
     SeatsComponent,
     ProjectionSetupComponent
   ],
@@ -50,7 +48,7 @@ import { ProjectionSetupService } from './projection-setup/projection-setup.serv
     TheaterService,
     ProjectionService,
     ProjectionSetupService
-   ],
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
