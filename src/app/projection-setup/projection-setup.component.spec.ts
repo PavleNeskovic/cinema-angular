@@ -1,6 +1,13 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProjectionSetupComponent } from './projection-setup.component';
+import { ProjectionSetupService } from './projection-setup.service';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { HttpClient, HttpHandler } from '@angular/common/http';
+import { AppService } from '../app.service';
+import { MovieService } from '../movie/movie.service';
+import { TheaterService } from '../theater/theater.service';
 
 describe('ProjectionSetupComponent', () => {
   let component: ProjectionSetupComponent;
@@ -8,7 +15,9 @@ describe('ProjectionSetupComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProjectionSetupComponent ]
+      declarations: [ ProjectionSetupComponent ],
+      imports: [FormsModule, RouterModule],
+      providers: [ProjectionSetupService, HttpClient, HttpHandler, AppService, MovieService, TheaterService]
     })
     .compileComponents();
   }));

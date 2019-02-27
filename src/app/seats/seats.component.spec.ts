@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SeatsComponent } from './seats.component';
+import { AngularFirestore } from 'angularfire2/firestore';
+import { environment } from '../../environments/environment';
+import { AngularFireModule } from 'angularfire2';
 
 describe('SeatsComponent', () => {
   let component: SeatsComponent;
@@ -8,7 +11,9 @@ describe('SeatsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SeatsComponent ]
+      declarations: [ SeatsComponent ],
+       imports: [],//FormsModule, RouterModule],
+      providers: [AngularFirestore]//,MovieService, HttpClient, HttpHandler]
     })
     .compileComponents();
   }));

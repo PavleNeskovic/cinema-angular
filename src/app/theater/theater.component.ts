@@ -1,8 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-
-import { Observable } from 'rxjs/Observable';
-
 import { Theater } from './theater';
 import { TheaterService } from './theater.service';
 
