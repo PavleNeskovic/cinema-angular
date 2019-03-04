@@ -44,34 +44,42 @@ export class SeatsComponent implements OnInit {
   }
 
   selectSeat(item, event) {
-    var reserved;
     var key = this.extractKey(item);
     var data = this.extractData(item);
     this.item = this.db.doc<Item>('items/' + key);
-    var sfDocRef = this.db.firestore.collection('items').doc(key);
+    var docRef = this.db.firestore.collection('items').doc(key);
     var that = this;
     return this.db.firestore.runTransaction(function (transaction) {
       // This code may get re-run multiple times if there are conflicts.
-      return transaction.get(sfDocRef).then(function (s) {
-        /*If it's empty - set uid, 
-          if uid is set - set to empty, 
-          otherwise someone else reserved the seat */
-        if (s.data().reserved == "empty") {
-          reserved = that.afAuth.auth.currentUser.uid;
-          that.renderer.setElementClass(event.target, "selected", true);
-          transaction.update(sfDocRef, { number: data.number, reserved: reserved });
-        } else if (s.data().reserved == that.afAuth.auth.currentUser.uid) {
-          reserved = "empty";
-          transaction.update(sfDocRef, { number: data.number, reserved: reserved });
-        } else {
-          transaction.update(sfDocRef, { number: data.number, reserved: s.data().reserved });
-        }
+      return transaction.get(docRef).then(function (snapshot) {
+        that.updateSeat(snapshot, that, event, transaction, docRef, data);
       });
     }).then(function () {
       console.log("Transaction successfully committed!");
     }).catch(function (error) {
       console.log("Transaction failed: ", error);
     });
+  }
+
+  /*If it's empty - set uid, 
+  if uid is set - set to empty, 
+  otherwise someone else reserved the seat */
+  private updateSeat(snapshot: firebase.firestore.DocumentSnapshot, that: this, event: any,
+    transaction: firebase.firestore.Transaction, docRef: firebase.firestore.DocumentReference, data: any) {
+    var reserved;
+    if (snapshot.data().reserved == "empty") {
+      reserved = that.afAuth.auth.currentUser.uid;
+      that.renderer.setElementClass(event.target, "selected", true);
+      transaction.update(docRef, { number: data.number, reserved: reserved });
+    }
+    else if (snapshot.data().reserved == that.afAuth.auth.currentUser.uid) {
+      reserved = "empty";
+      transaction.update(docRef, { number: data.number, reserved: reserved });
+    }
+    else {
+      transaction.update(docRef, { number: data.number, reserved: snapshot.data().reserved });
+    }
+    return reserved;
   }
 
   extractKey(item) {
@@ -110,10 +118,10 @@ export class SeatsComponent implements OnInit {
   onSuccess() {
     this.logout();
     this.success = true;
-      var timer = Observable.timer(6000);
-      timer.subscribe(t =>{
-        this.success = false;
-      });
+    var timer = Observable.timer(6000);
+    timer.subscribe(t => {
+      this.success = false;
+    });
   }
 
 }
